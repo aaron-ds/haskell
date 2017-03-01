@@ -54,9 +54,10 @@ could possibly use unlines instead of the first concat
 
 
 2. could do something recursive where we keep building
+have another look at this, the recursive way that takes an accumulator might be less error prone
 
- > at :: Int -> (a -> a) -> [a] -> [a]
- > at i f xs = 
+> at :: Int -> (a -> a) -> [a] -> [a]
+> at i f xs = (take (i - 1) xs) ++ [f (xs !! (i - 1))] ++ (drop i xs)
 
 
 
