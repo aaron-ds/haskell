@@ -41,6 +41,7 @@ problems, working states, and solutions:
 could a foldr be used here??
 concat map could be replaced by flatmap
 could possibly use unlines instead of the first concat
+- use composition here?
 
 
 > showProblemBoxes :: Problem -> String
@@ -55,9 +56,11 @@ could possibly use unlines instead of the first concat
 
 2. could do something recursive where we keep building
 have another look at this, the recursive way that takes an accumulator might be less error prone
+could check whether i is bigger than the length of the list, if so just return the list - do this with guard clauses?
 
 > at :: Int -> (a -> a) -> [a] -> [a]
-> at i f xs = (take (i - 1) xs) ++ [f (xs !! (i - 1))] ++ (drop i xs)
+> at i f xs | i >= length xs = xs
+>           | otherwise = (take i xs) ++ [f (xs !! i)] ++ (drop (i + 1) xs)
 
 
 
