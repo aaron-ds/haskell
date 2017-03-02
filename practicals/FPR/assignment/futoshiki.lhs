@@ -37,7 +37,7 @@ problems, working states, and solutions:
 
 ----------------------------------------------------------------------
 
-3. Displaying puzzles
+1. Displaying puzzles
 could a foldr be used here??
 concat map could be replaced by flatmap
 could possibly use unlines instead of the first concat
@@ -62,6 +62,39 @@ could check whether i is bigger than the length of the list, if so just return t
 > at i f xs | i >= length xs = xs
 >           | otherwise = (take i xs) ++ [f (xs !! i)] ++ (drop (i + 1) xs)
 
+
+3.
+
+test = [[1,2],[],[3],[],[4]]
+at 1 (1 :) test
+this adds 1 to the start of the list inside the list at element position 1
+
+append the constraint to the list 'at' the position defined in the constraint.
+
+we want to append each of the horizontal constraints
+a comprehension with an inner loop creating the 5 lists representing the rows. a filter contraint to only take the horizontal constraints
+
+> groupRowConstraints :: Constraints -> [Constraints]
+> groupRowConstraints cs = [[]|c <- cs]
+>   where r = [[]|_ <- [1..size]]
+>
+> groupRowConstraints' :: Constraints -> [Constraints]
+> groupRowConstraints' cs = [[c | c <- cs, direction c == H, row c == r] | r <- [0..(size-1)]]
+
+
+we want a nested loop here
+
+> direction :: Constraint -> Direction
+> direction (d, o, c, r) = d
+>
+> ordering :: Constraint -> Ordering
+> ordering (d, o, c, r) = o
+>
+> column :: Constraint -> Int
+> column (d, o, c, r) = c
+>
+> row :: Constraint -> Int
+> row (d, o, c, r) = r
 
 
 
